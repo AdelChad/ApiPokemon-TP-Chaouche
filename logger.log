@@ -26,3 +26,7 @@
 {"level":"info","message":{"duration":1,"statusCode":404,"timestamp":"2024-02-16T11:43:49.747Z"}}
 {"level":"info","message":{"ip":"::1","method":"GET","url":"/pokemon/ch"}}
 {"level":"info","message":{"duration":2070,"statusCode":500,"timestamp":"2024-02-16T11:44:03.169Z"}}
+{"level":"info","message":{"ip":"::1","method":"GET","url":"/location/ditto"}}
+{"level":"info","message":{"duration":102,"statusCode":200,"timestamp":"2024-02-16T11:56:25.671Z"}}
+{"level":"info","message":{"ip":"::1","method":"GET","url":"/location/ditto"}}
+{"level":"info","message":{"duration":102,"statusCode":200,"timestamp":"2024-02-16T11:58:38.070Z"}}
