@@ -144,7 +144,7 @@ export class PokemonController {
             const response: AxiosResponse = await axios.get(
                 `${this.BASE_URL_POKEMON}/pokemon/${name}/encounters`
             )
-            let tabLocation: Array<LocationPokemon> = []
+            let tabLocation: Array<LocationPokemon | string> = []
             
             for(let location of response.data){
                 if(location.version_details[1] != undefined){
@@ -158,8 +158,10 @@ export class PokemonController {
                             
                         }
                         tabLocation = [...tabLocation, locationData]
-                        }
-                    } 
+                    }
+                }else{
+                    tabLocation = [...tabLocation, 'Aucune information trouvé']
+                } 
             }
             res.send(tabLocation)
             
