@@ -151,6 +151,7 @@ export class PokemonController {
                 if(location.version_details[1] != undefined){
                     if(location.version_details[1].encounter_details.length > 1){
                         const locationData: LocationPokemon = {
+                            version: location.version_details[1].version.name,
                             name: location.location_area.name,
                             encounterRate: location.version_details[1].encounter_details[1].chance,
                             maxLevel: location.version_details[1].encounter_details[1].max_level,
