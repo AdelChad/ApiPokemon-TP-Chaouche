@@ -49,7 +49,6 @@ export class PokemonController {
             )
             res.json(response.data);
             
-            
         }catch(error){
             res.send(error)
         }
@@ -136,7 +135,7 @@ export class PokemonController {
      *            description: Erreur, lors de la récupération des données météo.
      */
 
-    public async getLocationPokemon(req: Request, res: Response):Promise<void>{
+    public async getLocationPokemon(req: Request, res: Response): Promise<void>{
 
         const name: string = req.params.name;
 
@@ -148,18 +147,21 @@ export class PokemonController {
             let tabLocation: Array<LocationPokemon> = []
             
             for(let location of response.data){
-               // console.log(location.version_details[1].encounter_details[1]);
-               //let encounterRate: number | string = location.version_details[1].encounter_details[1] != undefined ? location.version_details[1].encounter_details[1].chance : "null"
-                
-                
-                const locationData: LocationPokemon = {
-                    name: location.location_area.name
-                }
-                tabLocation.push(locationData)
+                if(location.version_details[1] != undefined){
+                    if(location.version_details[1].encounter_details.length > 1){
+                        const locationData: LocationPokemon = {
+                            name: location.location_area.name,
+                            encounterRate: location.version_details[1].encounter_details[1].chance,
+                            maxLevel: location.version_details[1].encounter_details[1].max_level,
+                            minLevel: location.version_details[1].encounter_details[1].min_level,
+                            methodEncounter: location.version_details[1].encounter_details[1].method.name,
+                            
+                        }
+                        tabLocation = [...tabLocation, locationData]
+                        }
+                    } 
             }
             res.send(tabLocation)
-            
-            
             
         }catch(error){
             res.send(error)
