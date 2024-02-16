@@ -2,7 +2,8 @@ import axios , { AxiosResponse } from "axios";
 import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../errors/ApiError";
 import { API_ERROR_MESSAGE } from "../constantes/errorCodes";
-import { MinimalWeatherData } from "../interfaces/MinimalWeatherData";
+import { PokemonData } from "../interfaces/Pokemon";
+import { LocationPokemon } from "../interfaces/Location-Pokemon";
 
 /**
  * @swagger
@@ -84,9 +85,30 @@ export class PokemonController {
             const response: AxiosResponse = await axios.get(
                 `${this.BASE_URL_POKEMON}/pokemon/${name}`
             )
-            res.json(response.data);
+
+            let tabAbilities: Array<string> = []
+            let tabTypes: Array<string> = []
             
             
+            for(let value of response.data.abilities){
+                tabAbilities = [...tabAbilities, value.ability.name]
+            }
+
+            for(let value of response.data.types){
+                tabTypes = [...tabTypes, value.type.name]
+            }
+
+            console.log(response.data.types.type)
+            const pokemon: PokemonData = {
+                id: response.data.id,
+                name: response.data.name,
+                type: tabTypes,
+                abilities: tabAbilities,
+                height: response.data.height,
+                weight: response.data.weight,
+            }
+            
+            res.json(pokemon);
         }catch(error){
             res.send(error)
         }
@@ -118,11 +140,25 @@ export class PokemonController {
 
         const name: string = req.params.name;
 
+
         try{
             const response: AxiosResponse = await axios.get(
                 `${this.BASE_URL_POKEMON}/pokemon/${name}/encounters`
             )
-            res.json(response.data);
+            let tabLocation: Array<LocationPokemon> = []
+            
+            for(let location of response.data){
+               // console.log(location.version_details[1].encounter_details[1]);
+               //let encounterRate: number | string = location.version_details[1].encounter_details[1] != undefined ? location.version_details[1].encounter_details[1].chance : "null"
+                
+                
+                const locationData: LocationPokemon = {
+                    name: location.location_area.name
+                }
+                tabLocation.push(locationData)
+            }
+            res.send(tabLocation)
+            
             
             
         }catch(error){
