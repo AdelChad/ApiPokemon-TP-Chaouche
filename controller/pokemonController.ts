@@ -41,7 +41,7 @@ export class PokemonController {
      *            description: Erreur, lors de la récupération des données météo.
      */
 
-    public async getAllPokemon(req: Request, res: Response):Promise<void>{
+    public async getAllPokemon(req: Request, res: Response, next: NextFunction):Promise<void>{
 
         try{
             const response: AxiosResponse = await axios.get(
@@ -50,7 +50,8 @@ export class PokemonController {
             res.json(response.data);
             
         }catch(error){
-            res.send(error)
+            
+            next(new ApiError(API_ERROR_MESSAGE))
         }
     }
 
@@ -76,7 +77,7 @@ export class PokemonController {
      *            description: Erreur, lors de la récupération des données météo.
      */
 
-    public async getPokemon(req: Request, res: Response):Promise<void>{
+    public async getPokemon(req: Request, res: Response, next: NextFunction):Promise<void>{
 
         const name: string = req.params.name;
 
@@ -109,7 +110,7 @@ export class PokemonController {
             
             res.json(pokemon);
         }catch(error){
-            res.send(error)
+            next(new ApiError(API_ERROR_MESSAGE))
         }
     }
 
@@ -135,7 +136,7 @@ export class PokemonController {
      *            description: Erreur, lors de la récupération des données météo.
      */
 
-    public async getLocationPokemon(req: Request, res: Response): Promise<void>{
+    public async getLocationPokemon(req: Request, res: Response, next: NextFunction): Promise<void>{
 
         const name: string = req.params.name;
 
@@ -166,7 +167,7 @@ export class PokemonController {
             res.send(tabLocation)
             
         }catch(error){
-            res.send(error)
+            next(new ApiError(API_ERROR_MESSAGE))
         }
     }
 }
