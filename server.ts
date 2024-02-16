@@ -4,6 +4,9 @@ import { PokemonController } from "./controller/pokemonController";
 import RequestMiddleware from './middlewares/RequestMiddlerware';
 import ResponseMiddleware from './middlewares/ResponseMiddleware';
 import { errorHandler } from "./middlewares/errorHandler";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { swaggerOptions } from "./swaggerOptions";
 
 dotenv.config()
 
@@ -12,11 +15,15 @@ const app = express();
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 3000
 const BASE_URL: string = process.env.POKEMON_API_URL ? process.env.POKEMON_API_URL : 'default_url'
 
+const specs = swaggerJSDoc(swaggerOptions)
+
 const pokemonController = new PokemonController(BASE_URL);
 
 app.use(RequestMiddleware);
 app.use(ResponseMiddleware);
 app.use(errorHandler);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
 app.get("/testApi", (req: Request, res: Response) => {
     res.send("L'api pokemon est active")

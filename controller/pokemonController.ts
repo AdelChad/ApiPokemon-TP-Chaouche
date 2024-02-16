@@ -1,15 +1,15 @@
 import axios , { AxiosResponse } from "axios";
 import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../errors/ApiError";
-import { API_ERROR_MESSAGE } from "../constantes/errorCodes";
+import { API_ERROR_MESSAGE, API_ERROR_MESSAGE_LOCATION } from "../constantes/errorCodes";
 import { PokemonData } from "../interfaces/Pokemon";
 import { LocationPokemon } from "../interfaces/Location-Pokemon";
 
 /**
  * @swagger
  * tags:
- *  name: Weather
- * description: Opération lié à la météo
+ *  name: Pokemon
+ *  description: Opération lié aux pokémons
  */
 
 export class PokemonController {
@@ -23,24 +23,16 @@ export class PokemonController {
     /**
      * @swagger
      * /pokemon:
-     * get: 
-     *      summary: Obtient les liens des 20 premiers pokemons.
-     *      description: Recupérer les informations météo pour une ville donnée.
-     *      tags: [Weather]
-     *      parameters:
-     *          - in: path
-     *            name: city
-     *            required: true
-     *            description: Nom de la ville.
-     *            schema:
-     *              tpe: string
+     *  get: 
+     *      summary: Obtient une liste de pokémons.
+     *      description: Recupérer les informations pour les 20 premiers pokémons.
+     *      tags: [Pokemon]
      *      responses:
      *          200:
-     *            description: Sccuès, retourne les donnéees météo.
+     *            description: Sccuès, retourne les donnéees.
      *          400:
-     *            description: Erreur, lors de la récupération des données météo.
+     *            description: Erreur, lors de la récupération des données pokémons.
      */
-
     public async getAllPokemon(req: Request, res: Response, next: NextFunction):Promise<void>{
 
         try{
@@ -50,7 +42,6 @@ export class PokemonController {
             res.json(response.data);
             
         }catch(error){
-            
             next(new ApiError(API_ERROR_MESSAGE))
         }
     }
@@ -58,23 +49,23 @@ export class PokemonController {
 
     /**
      * @swagger
-     * /pokemon:
-     * get: 
-     *      summary: Obtient les liens des 20 premiers pokemons.
-     *      description: Recupérer les informations météo pour une ville donnée.
-     *      tags: [Weather]
+     * /pokemon/{name}:
+     *  get: 
+     *      summary: Obtient les informations d'un pokémon.
+     *      description: Recupérer les informations d'un pokémon donné.
+     *      tags: [Pokemon]
      *      parameters:
      *          - in: path
-     *            name: city
+     *            name: name
      *            required: true
-     *            description: Nom de la ville.
+     *            description: Nom du pokémon.
      *            schema:
      *              tpe: string
      *      responses:
      *          200:
-     *            description: Sccuès, retourne les donnéees météo.
+     *            description: Sccuès, retourne les donnéees du pokémon.
      *          400:
-     *            description: Erreur, lors de la récupération des données météo.
+     *            description: Erreur, lors de la récupération des données du pokémon.
      */
 
     public async getPokemon(req: Request, res: Response, next: NextFunction):Promise<void>{
@@ -117,23 +108,23 @@ export class PokemonController {
 
     /**
      * @swagger
-     * /pokemon:
-     * get: 
-     *      summary: Obtient les liens des 20 premiers pokemons.
-     *      description: Recupérer les informations météo pour une ville donnée.
-     *      tags: [Weather]
+     * /location/{name}:
+     *  get: 
+     *      summary: Obtient des localisations.
+     *      description: Recupérer les locations pour capturé un pokemon.
+     *      tags: [Pokemon]
      *      parameters:
      *          - in: path
-     *            name: city
+     *            name: name
      *            required: true
-     *            description: Nom de la ville.
+     *            description: Nom du pokémon.
      *            schema:
      *              tpe: string
      *      responses:
      *          200:
-     *            description: Sccuès, retourne les donnéees météo.
+     *            description: Sccuès, retourne les localisations.
      *          400:
-     *            description: Erreur, lors de la récupération des données météo.
+     *            description: Erreur, lors de la récupération des localisations.
      */
 
     public async getLocationPokemon(req: Request, res: Response, next: NextFunction): Promise<void>{
@@ -168,7 +159,7 @@ export class PokemonController {
             res.send(tabLocation)
             
         }catch(error){
-            next(new ApiError(API_ERROR_MESSAGE))
+            next(new ApiError(API_ERROR_MESSAGE_LOCATION))
         }
     }
 }
