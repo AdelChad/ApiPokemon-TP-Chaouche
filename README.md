@@ -1,8 +1,8 @@
-# ☘️ Typescript project - M1 Web Development
+# Typescript project - M1 Web Development
 
-## 💾 How to install the project ?
+## How to install the project ?
 
-### ☁ GitHub project
+### GitHub project
 
 1. Go to GitHub repository : [GitHub Repository](https://github.com/AdelChad/ApiPokemon-TP-Chaouche)
 
@@ -18,9 +18,7 @@
 
 7. Start nodemon server : `npm start`
 
-8. Congratulation ! 🎇
-
-## 🫂 Documentation
+## Documentation
 
 Please, check the api documentation of pokeapi : [Get started](https://pokeapi.co/docs/v2#pokemon)
 
